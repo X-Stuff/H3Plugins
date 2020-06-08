@@ -4,6 +4,7 @@
 #pragma once
 
 #define _H3API_PATCHER_X86_
+#define _FORCE_INLINE_
 #include "H3API.hpp"
 
 // * 20 valid scenes

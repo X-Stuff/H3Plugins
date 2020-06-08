@@ -2,6 +2,8 @@
 #define _HOOKS_HPP_
 
 #define _H3API_PLUGINS_
+#define _H3API_PATCHER_X86_
+#define _H3API_EXCEPTION_
 #include "H3API.hpp"
 
 // * Global Patcher
