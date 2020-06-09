@@ -20,6 +20,7 @@ void hooks_init(PatcherInstance* pi);
 #define P_IsNetworkGame		DwordAt(0x69959C)
 #define P_GameType			DwordAt(0x698A40)
 
+// function addresses
 #define PLAYER_SHOW_TAVERN_DIALOG 0x5FF3A0
 #define PLAYER_BUY_HERO 0x5C16E0
 

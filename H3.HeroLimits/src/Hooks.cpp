@@ -2,6 +2,8 @@
 #include "H3API.hpp"
 
 #include "Localization.hpp"
+#include "Config.hpp"
+#include "Log.hpp"
 
 #define MAX_HEROES 8
 #define MAX_TOWNS 48
@@ -48,6 +50,10 @@ BYTE GetPlayerHeroes(h3::H3Player* player)
     return hCount;
 }
 
+/*
+ *  There is no default checks for "if (town->buyHero())" so there is no way to safe exit function without buying hero
+ * But only for human player. AI seems Ok with just fail buying.
+ */
 BOOL GetReturnAddressForBoughtFailure(_ptr_ orig, _ptr_& result)
 {
     USHORT lookipSize = 64;    // exact offset is 0x22
@@ -67,6 +73,26 @@ BOOL GetReturnAddressForBoughtFailure(_ptr_ orig, _ptr_& result)
     return FALSE;
 }
 
+BOOL IsHeroLimitReached(h3::H3Player* player)
+{
+    if (!player)
+    {
+        return FALSE;
+    }
+
+    switch (Config::Instance().Mode())
+    {
+    case Config::LimitationMode::Global:
+        return GetPlayerHeroes(player) >= Config::Instance().HeroLimit();
+
+    case Config::LimitationMode::Town:
+        return GetPlayerHeroes(player) >= (player->townsCount * Config::Instance().HeroLimit());
+
+    case Config::LimitationMode::None:
+    default:
+        return FALSE;
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
@@ -83,17 +109,14 @@ _LHF_(TownBuyHero_LowLevel)
 
     if (playerId >= 8)
     {
-        h3::H3String error;
-        error.Printf("Player id invalid: %d", playerId);
-
-        h3::F_MessageBox(error);
+        DEBUG_LOG("Player id invalid: %d", playerId);
         return EXEC_DEFAULT;
     }
 
     h3::H3Main* main = P_Main;
     h3::H3Player* player = &main->players[playerId];
 
-    if (GetPlayerHeroes(player) >= player->townsCount)
+    if (IsHeroLimitReached(player))
     {
         auto origRetAddress = *reinterpret_cast<_ptr_*>(c->esp);
         auto newRetAddress = origRetAddress;
@@ -105,6 +128,8 @@ _LHF_(TownBuyHero_LowLevel)
 
             if (GetReturnAddressForBoughtFailure(origRetAddress, newRetAddress))
             {
+                // this needs to JE opcode jump worked
+                // The flow with new ret address is just coming back to "close" tavern button
                 c->flags.ZF = TRUE;
             }
         }
@@ -113,10 +138,7 @@ _LHF_(TownBuyHero_LowLevel)
         return NO_EXEC_DEFAULT;
     }
 
-    h3::H3String info;
-    info.Printf("Player id: %d. Buying hero.", playerId);
-    OutputDebugStringA(info.String());
-
+    DEBUG_LOG("Player id: %d. Buying hero.", playerId);
     return EXEC_DEFAULT;
 }
 

@@ -12,6 +12,7 @@ Dictionary s_Default =
     std::make_pair(LocalizationString::E_HERO_LIMIT_REACHED, "Can't buy another hero! Limit reached.")
 };
 
+
 Language GetSystemLanguage()
 {
     auto locale = std::locale("").name();
@@ -29,15 +30,19 @@ Language GetSystemLanguage()
     return Language();
 }
 
+
 Dictionary ReadDictionary(INIReader& inifile, std::string section)
 {
     static const std::string empty;
     Dictionary dict;
 
-    auto result = inifile.Get(section, LocalizationString::E_HERO_LIMIT_REACHED_NAME, empty);
-    if (result != empty)
+    for (auto i = LocalizationItem::FIRST + 1; i < LocalizationItem::LAST; ++i)
     {
-        dict[LocalizationString::E_HERO_LIMIT_REACHED] = result;
+        auto result = inifile.Get(section, LocalizationString::ToString(i), empty);
+        if (result != empty)
+        {
+            dict[i] = result;
+        }
     }
 
     return dict;
@@ -65,7 +70,7 @@ void Localization::Initialize(INIReader& inifile)
             if (culture.length() > 0)
             {
                 auto dictSection = "Localization_" + culture;
-                auto sections = inifile.Sections(); // idiot creates copy here
+                auto sections = inifile.Sections(); // copy creates here
 
                 if (sections.find(dictSection) != sections.end())
                 {

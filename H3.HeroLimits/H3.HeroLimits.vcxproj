@@ -169,6 +169,8 @@ copy "$(TargetDir)Resources\options.ini" %COPY_TARGET%</Command>
     <ClInclude Include="include\Config.hpp" />
     <ClInclude Include="include\Hooks.hpp" />
     <ClInclude Include="include\Localization.hpp" />
+    <ClInclude Include="include\Log.hpp" />
+    <ClInclude Include="include\Utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\H3API\H3API.vcxproj">
@@ -176,6 +178,10 @@ copy "$(TargetDir)Resources\options.ini" %COPY_TARGET%</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="readme.md">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
     <None Include="Resources\options.ini" />
     <Content Include="Resources\options.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

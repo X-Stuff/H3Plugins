@@ -38,9 +38,18 @@
     <ClInclude Include="include\Config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Log.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\options.ini">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="readme.md">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
