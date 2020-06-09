@@ -1,0 +1,21 @@
+name: "build-plugin"
+on:
+  push:
+    tags:
+      - release-*
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      id: setup_msbuild
+      uses: ./
+      with:
+        vs-version: "[16.4,16.6]"
+
+    - name: Run MSBuild
+      run: msbuild H3.HeroLimits/H3.HeroLimits.vcxproj -t:Rebuild -p:Configuration=Release
