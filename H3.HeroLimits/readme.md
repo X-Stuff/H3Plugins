@@ -1,4 +1,7 @@
 # H3 Hero limits plugin.
+
+![build-plugin](https://github.com/X-Stuff/H3Plugins/workflows/build-plugin/badge.svg)
+
 ## Overview
 
 **verison: 0.0.1**
