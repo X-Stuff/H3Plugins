@@ -20,6 +20,9 @@ PatcherInstance* _PI;
 //
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
+/*
+ * Count all heroes (including town heroes)
+ */
 BYTE GetPlayerHeroes(h3::H3Player* player)
 {
     BYTE hCount = 0;
@@ -73,6 +76,9 @@ BOOL GetReturnAddressForBoughtFailure(_ptr_ orig, _ptr_& result)
     return FALSE;
 }
 
+/*
+ * Check if hero limit reached for specified player depending on limitation mode.
+ */
 BOOL IsHeroLimitReached(h3::H3Player* player)
 {
     if (!player)
@@ -142,7 +148,9 @@ _LHF_(TownBuyHero_LowLevel)
     return EXEC_DEFAULT;
 }
 
-void hooks_init(PatcherInstance* pi)
+void hooks_init(INIReader& reader, PatcherInstance* pi)
 {
-    pi->WriteLoHook(PLAYER_BUY_HERO, TownBuyHero_LowLevel);
+    auto townBuyHeroAddress = static_cast<_ptr_>(reader.GetInteger("Hooks", "TownBuyHero", TOWN_BUY_HERO));
+
+    pi->WriteLoHook(townBuyHeroAddress, TownBuyHero_LowLevel);
 }

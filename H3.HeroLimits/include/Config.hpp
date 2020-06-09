@@ -2,33 +2,57 @@
 
 #include "INIReader.h"
 
+/*
+ * Global configuration for plugin
+ */
 class Config
 {
 public:
-	enum class LimitationMode
-	{
-		None = 0,
+    enum class LimitationMode
+    {
+        /*
+         * No limitation rules will be applied
+         */
+        None = 0,
 
-		Town,
+        /*
+         * Limit hero count per town
+         */
+        Town,
 
-		Global
-	};
+        /*
+         * Limit global hero count for every player
+         */
+        Global
+    };
 
 public:
 
-	static void Initialize(INIReader& inifile);
+    /*
+     * Initialize configuration signleton object from settings from ini file
+     */
+    static void Initialize(INIReader& inifile);
 
-	static const Config& Instance() { return s_Instance; }
+    /*
+     * Configuration singleton object
+     */
+    static const Config& Instance() { return s_Instance; }
 
-	LimitationMode Mode() const { return m_Mode; }
+    /*
+     * Current limitation mode
+     */
+    LimitationMode Mode() const { return m_Mode; }
 
-	uint8_t HeroLimit() const { return m_HeroLimit; }
+    /*
+     * Current limit value
+     */
+    uint8_t HeroLimit() const { return m_HeroLimit; }
 
 private:
 
-	static Config s_Instance;
+    static Config s_Instance;
 
-	LimitationMode m_Mode{ LimitationMode::Town };
+    LimitationMode m_Mode{ LimitationMode::Town };
 
-	uint8_t m_HeroLimit{ 0 };
+    uint8_t m_HeroLimit{ 0 };
 };

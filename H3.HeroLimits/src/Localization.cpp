@@ -1,10 +1,7 @@
 #include "Localization.hpp"
 
 #include <stdarg.h>
-
-#define MAX_STRING 65535
-
-char s_TempBuffer[MAX_STRING]{0};
+#include <locale>
 
 Localization s_Singleton;
 Dictionary s_Default =
@@ -12,7 +9,9 @@ Dictionary s_Default =
     std::make_pair(LocalizationString::E_HERO_LIMIT_REACHED, "Can't buy another hero! Limit reached.")
 };
 
-
+/*
+ * TODO: This doesn't work. Need to get default system language in some other way
+ */
 Language GetSystemLanguage()
 {
     auto locale = std::locale("").name();
@@ -99,11 +98,12 @@ std::string Localization::Localize(LocalizationItem string, ...)
             va_list va;
             va_start(va, string);
 
-            vsprintf_s(s_TempBuffer, sizeof(s_TempBuffer), found->second.c_str(), va);
+            static char buffer[1024 * 8]{ 0 };
+            vsprintf_s(buffer, sizeof(buffer), found->second.c_str(), va);
 
             va_end(va);
 
-            return std::string(s_TempBuffer);
+            return std::string(buffer);
         }
     }
 

@@ -6,9 +6,13 @@
 #include "INIReader.h"
 #include "Localization.hpp"
 #include "Config.hpp"
+#include "Log.hpp"
 
 #include <string>
 #include "shlwapi.h"
+
+#define INI_SETTINGS "settings"
+#define INI_SETTING_DISABLE_VERSION_CHECK "DisableVersionCheck"
 
 std::string GetOptionsFilePath()
 {
@@ -44,8 +48,17 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
             pluginOn = TRUE;
 
             INIReader options(GetOptionsFilePath().c_str());
-
-            // TODO: check hash
+            if (!options.GetBoolean(INI_SETTINGS, INI_SETTING_DISABLE_VERSION_CHECK, false))
+            {
+                auto version = h3::H3Version::H3Version();
+                if (!version.sod())
+                {
+                    MessageBoxA(nullptr, "Error", "Verison of heroes3.exe is not valid. Required version: SOD "
+                        "You can disable version check in options.ini file and specify valid addresses for hooks. "
+                        "But most probably plugin will not work...", MB_OK | MB_ICONERROR);
+                    break;
+                }
+            }
 
             Config::Initialize(options);
             Localization::Initialize(options);
@@ -68,7 +81,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
                     break;
                 }
 
-                hooks_init(pi);
+                hooks_init(options, pi);
             }
         }
         break;
