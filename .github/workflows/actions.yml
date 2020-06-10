@@ -1,0 +1,59 @@
+name: "windows-build"
+on:
+  push:
+    tags:
+      - release-herolimits-*
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.0
+      with:
+        vs-version: "[16.4,16.6]"
+
+    - name: Run MSBuild
+      run: msbuild H3.HeroLimits/H3.HeroLimits.vcxproj -t:Rebuild -p:Configuration=Release
+
+
+    - name: Create Artifacts
+      run: |
+        mkdir artifacts
+        copy H3.HeroLimits\bin\Win32\Release\H3.HeroLimits.dll artifacts\H3.HeroLimits.dll
+        copy H3.HeroLimits\bin\Win32\Release\Resources\options.ini artifacts\options.ini
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: H3.HeroLimits.Plugin
+        path: artifacts/      
+        
+    - name: Create Release Archive
+      run: |
+        cd artifacts
+        Compress-Archive -Path H3.HeroLimits.dll,options.ini -DestinationPath H3.HeroLimits.zip
+            
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Hero Limiter. Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        asset_path: artifacts/H3.HeroLimits.zip
+        asset_name: H3.HeroLimits.zip
+        asset_content_type: application/zip

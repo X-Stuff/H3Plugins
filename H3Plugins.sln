@@ -29,6 +29,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "H3.DataLoader", "H3.DataLoa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "H3.HeroLimits", "H3.HeroLimits\H3.HeroLimits.vcxproj", "{4DEAC5F5-C971-4507-ABA1-7B71993CE85A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE712365-9B22-4242-B80F-4BB5E3852CF5}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\actions.yml = .github\workflows\actions.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
