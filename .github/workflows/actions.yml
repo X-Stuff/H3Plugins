@@ -1,10 +1,8 @@
 name: "windows-build"
 on:
   push:
-    branches: 
-      - Github-workflow
-    #tags:
-    #  - release-herolimits-*
+    tags:
+      - release-herolimits-*
 
 jobs:
   build:
@@ -22,7 +20,7 @@ jobs:
       run: msbuild H3.HeroLimits/H3.HeroLimits.vcxproj -t:Rebuild -p:Configuration=Release
 
 
-    - name: Create artifacts
+    - name: Create Artifacts
       run: |
         mkdir artifacts
         copy H3.HeroLimits\bin\Win32\Release\H3.HeroLimits.dll artifacts\H3.HeroLimits.dll
@@ -33,7 +31,7 @@ jobs:
         name: H3.HeroLimits.Plugin
         path: artifacts/      
         
-    - name: Create release archive
+    - name: Create Release Archive
       run: |
         cd artifacts
         Compress-Archive -Path H3.HeroLimits.dll,options.ini -DestinationPath H3.HeroLimits.zip
