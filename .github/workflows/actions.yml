@@ -22,18 +22,18 @@ jobs:
       run: msbuild H3.HeroLimits/H3.HeroLimits.vcxproj -t:Rebuild -p:Configuration=Release
 
 
-    - name: Archive artifacts
+    - name: Create artifacts
       run: |
         mkdir artifacts
-        copy bin\Win32\Release\H3.HeroLimits.dll artifacts\H3.HeroLimits.dll
-        copy bin\Win32\Release\Resources\options.ini artifacts\options.ini
+        copy H3.HeroLimits\bin\Win32\Release\H3.HeroLimits.dll artifacts\H3.HeroLimits.dll
+        copy H3.HeroLimits\bin\Win32\Release\Resources\options.ini artifacts\options.ini
         
     - uses: actions/upload-artifact@v2
       with:
         name: H3.HeroLimits.Plugin
         path: artifacts/      
         
-    - name: Create Release Archive
+    - name: Create release archive
       run: |
         cd artifacts
         Compress-Archive -Path H3.HeroLimits.dll,options.ini -DestinationPath H3.HeroLimits.zip
