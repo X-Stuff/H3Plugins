@@ -13,6 +13,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - run: |
+        mkdir artifacts
+        copy Readme.md artifacts/Readme.md
+        cd artifacts
+        Compress-Archive -Path Readme.md, -DestinationPath artifact.zip
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Heroes-Limiter
+        path: artifacts/
+
     - name: Test powershell
       shell: powershell
       run: |
