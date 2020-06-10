@@ -15,7 +15,9 @@ jobs:
     
     - name: Test powershell
       shell: powershell
-      run: Compress-Archive -Path "${{ github.workspace }}\Readme.md", -DestinationPath xxx.zip
+      run: |
+        cd ${{ github.workspace }}
+        Compress-Archive -Path Readme.md, -DestinationPath xxx.zip
       
     - name: Fail
       run: exit 1
@@ -31,7 +33,7 @@ jobs:
     - name: Archive artifacts
       shell: powershell
       working-directory: ${{ github.workspace }}
-      run: Compress-Archive -Path bin\Win32\Release\H3.HeroLimits.dll,bin\Win32\Release\Resources\options.ini -DestinationPath h3.HeroLimits.zip
+      run: Compress-Archive -Path "${{ github.workspace }}\bin\Win32\Release\H3.HeroLimits.dll","${{ github.workspace }}\bin\Win32\Release\Resources\options.ini" -DestinationPath h3.HeroLimits.zip
 
     - name: Create Release
       id: create_release
