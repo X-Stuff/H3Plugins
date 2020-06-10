@@ -1,10 +1,10 @@
 name: "windows-build"
 on:
   push:
-    paths: 
-      - ".github/workflows/"
-    tags:
-      - release-herolimits-*
+    branches: 
+      - Github-workflow
+    #tags:
+    #  - release-herolimits-*
 
 jobs:
   build:
