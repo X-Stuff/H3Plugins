@@ -20,7 +20,7 @@ PatcherInstance* _PI;
 //
 //////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
-/*
+/**
  * Count all heroes (including town heroes)
  */
 BYTE GetPlayerHeroes(h3::H3Player* player)
@@ -53,7 +53,7 @@ BYTE GetPlayerHeroes(h3::H3Player* player)
     return hCount;
 }
 
-/*
+/**
  *  There is no default checks for "if (town->buyHero())" so there is no way to safe exit function without buying hero
  * But only for human player. AI seems Ok with just fail buying.
  */
@@ -76,7 +76,7 @@ BOOL GetReturnAddressForBoughtFailure(_ptr_ orig, _ptr_& result)
     return FALSE;
 }
 
-/*
+/**
  * Check if hero limit reached for specified player depending on limitation mode.
  */
 BOOL IsHeroLimitReached(h3::H3Player* player)

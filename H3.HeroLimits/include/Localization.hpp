@@ -15,8 +15,8 @@ using LocalizationItem = LocalizationString::Values;
 using Dictionary = std::map<LocalizationItem, std::string>;
 using Language = std::string;
 
-/*
- *
+/**
+ *  Localization class, used to localize predefined string to selected language
  */
 class Localization
 {

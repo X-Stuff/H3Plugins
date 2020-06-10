@@ -1,12 +1,14 @@
 # H3 Hero limits plugin.
 
-![build-plugin](https://github.com/X-Stuff/H3Plugins/workflows/build-plugin/badge.svg)
+![windows-build](https://github.com/X-Stuff/H3Plugins/workflows/windows-build/badge.svg)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![Latest release](https://badgen.net/github/release/x-stuff/h3plugins)](https://github.com/X-Stuff/H3Plugins/releases)
+
 
 ## Overview
 
-**verison: 0.0.1**
-
-A plugin for **Heroes of Might and Magic III** game based on `H3API` library.
+A plugin for **Heroes of Might and Magic III** game based on `H3API` library.  
+*Version*: **0.0.1**
 
 Required game version: `SOD`
 
