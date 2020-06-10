@@ -13,6 +13,20 @@ Required game version: `SOD`
 
 Forked from: [`RoseKavalier's H3Plugins`](https://github.com/RoseKavalier/H3Plugins)
 
+## Installation
+
+1. Download `H3.HeroLimits.zip` archive from [latest release](https://github.com/X-Stuff/H3Plugins/releases/latest).
+2. Extract Archive to `<HOMM3>/_HD3_Data/Packs/HeroLimits` folder.  
+   > NOTE:  
+   > You have to create `HeroLimits` folder (name could be any)
+3. Configure plugin in `options.ini`.
+4. Run `HDLauncher` and add `HeroLimits` plugin
+5. Run game.
+
+In case of error you will see a Message box.  
+Unfortunately, right now, in case of success there will be no information.
+
+
 ## Functionality
 
 1. Plugin allows to set additional hero limitation rules.
