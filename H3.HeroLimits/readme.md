@@ -2,8 +2,7 @@
 
 ![windows-build](https://github.com/X-Stuff/H3Plugins/workflows/windows-build/badge.svg)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![Latest release](https://badgen.net/github/release/x-stuff/h3plugins)](https://github.com/X-Stuff/H3Plugins/releases)
-
+[![Latest release](https://img.shields.io/github/v/release/x-stuff/h3plugins)](https://github.com/X-Stuff/H3Plugins/releases/latest)
 
 ## Overview
 

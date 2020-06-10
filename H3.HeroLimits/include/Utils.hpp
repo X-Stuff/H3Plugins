@@ -26,7 +26,7 @@
 */
 
 
-/*
+/**
  * Declare enum class with ToString() function:
  *
  *   String values are the same as declared in enum. i.e: `cls::ToString(cls::ENUM_VALUE) == "ENUM_VALUE"`
